@@ -1,10 +1,28 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import Card from '../components/card/card';
 import NavBar from '../components/navbar/navbar';
 import Banner from '../components/banner/banner';
+import styles from '../styles/Home.module.css';
+import CategoryList from '../components/categoryList/categoryList';
 
 export default function Home() {
+  const videos = [
+    {
+      imgUrl: '/static/empire-records.jpg',
+    },
+    {
+      imgUrl: '/static/empire-records.jpg',
+    },
+    {
+      imgUrl: '/static/empire-records.jpg',
+    },
+    {
+      imgUrl: '/static/empire-records.jpg',
+    },
+    {
+      imgUrl: '/static/empire-records.jpg',
+    },
+  ];
   return (
     <div className={styles.container}>
       <Head>
@@ -18,6 +36,9 @@ export default function Home() {
         subtitle="Damn the man, save the empire!"
         imgUrl="/static/empire-records.jpg"
       />
+      <div className={styles.sectionWrapper}>
+        <CategoryList title="Category Title" videos={videos} />
+      </div>
     </div>
   );
 }

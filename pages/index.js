@@ -6,7 +6,7 @@ import CategoryList from '../components/categoryList/categoryList';
 import { getVideos } from '../lib/videos';
 
 export async function getServerSideProps() {
-  const videos = getVideos();
+  const videos = await getVideos();
 
   return { props: { videos } };
 }
@@ -26,8 +26,7 @@ export default function Home({ videos }) {
         imgUrl="/static/empire-records.jpg"
       />
       <div className={styles.sectionWrapper}>
-        <CategoryList title="Category Title" videos={videos} size="large" />
-        <CategoryList title="Category Title" videos={videos} size="medium" />
+        <CategoryList title="Disney" videos={videos} size="large" />
       </div>
     </div>
   );

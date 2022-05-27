@@ -1,28 +1,13 @@
 import Head from 'next/head';
-import Card from '../components/card/card';
 import NavBar from '../components/navbar/navbar';
 import Banner from '../components/banner/banner';
 import styles from '../styles/Home.module.css';
 import CategoryList from '../components/categoryList/categoryList';
+import { getVideos } from '../lib/videos';
 
 export default function Home() {
-  const videos = [
-    {
-      imgUrl: '/static/empire-records.jpg',
-    },
-    {
-      imgUrl: '/static/empire-records.jpg',
-    },
-    {
-      imgUrl: '/static/empire-records.jpg',
-    },
-    {
-      imgUrl: '/static/empire-records.jpg',
-    },
-    {
-      imgUrl: '/static/empire-records.jpg',
-    },
-  ];
+  const videos = getVideos();
+  
   return (
     <div className={styles.container}>
       <Head>

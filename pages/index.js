@@ -6,12 +6,15 @@ import CategoryList from '../components/categoryList/categoryList';
 import { getVideos } from '../lib/videos';
 
 export async function getServerSideProps() {
-  const videos = await getVideos();
+  const disneyVideos = await getVideos('Disney preview');
+  const travelVideos = await getVideos('Travel');
+  const cookingVideos = await getVideos('Cooking');
+  // const popularVideos = await getVideos('popular');
 
-  return { props: { videos } };
+  return { props: { disneyVideos, travelVideos, cookingVideos } };
 }
 
-export default function Home({ videos }) {
+export default function Home({ disneyVideos, travelVideos, cookingVideos }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -26,7 +29,10 @@ export default function Home({ videos }) {
         imgUrl="/static/empire-records.jpg"
       />
       <div className={styles.sectionWrapper}>
-        <CategoryList title="Disney" videos={videos} size="large" />
+        <CategoryList title="Disney" videos={disneyVideos} size="large" />
+        <CategoryList title="Travel" videos={travelVideos} size="small" />
+        <CategoryList title="Cooking" videos={cookingVideos} size="medium" />
+        {/* <CategoryList title="Popular" videos={videos} size="small" /> */}
       </div>
     </div>
   );

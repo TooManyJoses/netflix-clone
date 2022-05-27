@@ -5,9 +5,13 @@ import styles from '../styles/Home.module.css';
 import CategoryList from '../components/categoryList/categoryList';
 import { getVideos } from '../lib/videos';
 
-export default function Home() {
+export async function getServerSideProps() {
   const videos = getVideos();
-  
+
+  return { props: { videos } };
+}
+
+export default function Home({ videos }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -22,7 +26,8 @@ export default function Home() {
         imgUrl="/static/empire-records.jpg"
       />
       <div className={styles.sectionWrapper}>
-        <CategoryList title="Category Title" videos={videos} />
+        <CategoryList title="Category Title" videos={videos} size="large" />
+        <CategoryList title="Category Title" videos={videos} size="medium" />
       </div>
     </div>
   );

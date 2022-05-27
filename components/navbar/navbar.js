@@ -29,7 +29,7 @@ const NavBar = ({ username }) => {
         <a className={styles.logoLink} href="/">
           <div className={styles.logoWrapper}>
             <Image
-              src="/static/logo.webp"
+              src="/static/netflix.svg"
               alt="retro logo"
               width="300px"
               height="150px"

@@ -28,7 +28,14 @@
 
 .logoWrapper {
   color: var(--red);
-  width: 8rem /* 128px */;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+}
+
+.plusSign {
+  padding-left: 1rem;
+  font-size: 2rem;
 }
 
 .navItems {
@@ -130,5 +137,9 @@
 
   .navItem {
     margin-right: 1.25rem /* 20px */;
+  }
+
+  .plusSign {
+    font-size: 1rem;
   }
 }

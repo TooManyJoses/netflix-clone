@@ -34,6 +34,13 @@ const NavBar = ({ username }) => {
               width="300px"
               height="150px"
             />
+            <div className={styles.plusSign}>+</div>
+            <Image
+              src="/static/yt_logo.svg"
+              alt="retro logo"
+              width="300px"
+              height="150px"
+            />
           </div>
         </a>
         <ul className={styles.navItems}>

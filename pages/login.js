@@ -1,28 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { magic } from '../lib/magic-client';
 import styles from '../styles/login.module.css';
 
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const Login = () => {
+  const router = useRouter();
   const [userMessage, setUserMessage] = useState('');
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    const handleRouteComplete = () => {
+      setIsLoading(false);
+    };
+    router.events.on('routeChangeComplete', handleRouteComplete);
+    router.events.on('routeChangeError', handleRouteComplete);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteComplete);
+      router.events.off('routeChangeError', handleRouteComplete);
+    };
+  }, [router]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Cleek handleLogin');
-    if (email && emailRegEx.test(email)) {
-      // route to dashboard
+    if (emailRegEx.test(email)) {
+      setIsLoading(true);
+      // log in a user by their email
+      try {
+        const didToken = await magic.auth.loginWithMagicLink({ email });
+        console.log({ didToken });
+        if (didToken) {
+          router.push('/');
+        }
+      } catch (error) {
+        // Handle errors if required!
+        console.log('Something went wrong while logging in', error);
+      }
     } else {
-      // show message to user
       setUserMessage('Enter a valid email address');
     }
   };
 
   const handleEmailCheck = (e) => {
-    console.log('event', e);
-    setUserMessage('');
+    if (emailRegEx.test(email)) {
+      setUserMessage('');
+    }
     setEmail(e.target.value);
   };
 
@@ -55,7 +82,9 @@ const Login = () => {
 
       <main className={styles.main}>
         <div className={styles.signInWrapper}>
-          <h1 className={styles.signInHeader}>Sign In</h1>
+          <h1 className={styles.signInHeader}>
+            {isLoading ? 'Loading' : 'Sign In'}
+          </h1>
           <input
             type="text"
             placeholder="Email Address"

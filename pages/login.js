@@ -30,15 +30,12 @@ const Login = () => {
     e.preventDefault();
     if (emailRegEx.test(email)) {
       setIsLoading(true);
-      // log in a user by their email
       try {
         const didToken = await magic.auth.loginWithMagicLink({ email });
-        console.log({ didToken });
         if (didToken) {
           router.push('/');
         }
       } catch (error) {
-        // Handle errors if required!
         console.log('Something went wrong while logging in', error);
       }
     } else {

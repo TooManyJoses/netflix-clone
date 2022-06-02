@@ -32,6 +32,7 @@ export default function Home({
       <div className={styles.main}>
         <NavBar username="Jose Rubio" />
         <Banner
+          videoId="uvIsvZlk4GE"
           title="Empire Records"
           subtitle="Damn the man, save the empire!"
           imgUrl="/static/empire-records.jpg"

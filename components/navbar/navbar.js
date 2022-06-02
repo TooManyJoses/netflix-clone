@@ -10,16 +10,18 @@ const NavBar = () => {
   const [username, setUsername] = useState('');
   const router = useRouter();
 
-  useEffect(async () => {
-    // Assumes a user is already logged in
-    try {
-      const { email } = await magic.user.getMetadata();
-      if (email) {
-        setUsername(email);
+  useEffect(() => {
+    async function getUsername() {
+      try {
+        const { email } = await magic.user.getMetadata();
+        if (email) {
+          setUsername(email);
+        }
+      } catch (error) {
+        console.log("Error retrieving email:", error);
       }
-    } catch (error) {
-      console.error('Error Retrieving email', error);
     }
+    getUsername();
   }, []);
 
   const handleOnClickHome = (e) => {

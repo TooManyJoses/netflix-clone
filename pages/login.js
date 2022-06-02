@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { magic } from '../lib/magic-client';
+import Loader from '../components/loader/loader';
 import styles from '../styles/login.module.css';
 
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -79,19 +80,23 @@ const Login = () => {
 
       <main className={styles.main}>
         <div className={styles.signInWrapper}>
-          <h1 className={styles.signInHeader}>
-            {isLoading ? 'Loading' : 'Sign In'}
-          </h1>
-          <input
-            type="text"
-            placeholder="Email Address"
-            className={styles.emailInput}
-            onChange={handleEmailCheck}
-          />
-          <p className={styles.userMsg}>{userMessage}</p>
-          <button onClick={handleLogin} className={styles.signInButton}>
-            Sign In
-          </button>
+          <h1 className={styles.signInHeader}>Sign In</h1>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <input
+                type="text"
+                placeholder="Email Address"
+                className={styles.emailInput}
+                onChange={handleEmailCheck}
+              />
+              <p className={styles.userMsg}>{userMessage}</p>
+              <button onClick={handleLogin} className={styles.signInButton}>
+                Sign In
+              </button>
+            </>
+          )}
         </div>
       </main>
     </div>

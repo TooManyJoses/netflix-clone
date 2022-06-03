@@ -30,7 +30,7 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
-        <NavBar username="Jose Rubio" />
+        <NavBar />
         <Banner
           videoId="uvIsvZlk4GE"
           title="Empire Records"

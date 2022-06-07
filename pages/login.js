@@ -37,7 +37,7 @@ const Login = () => {
           router.push('/');
         }
       } catch (error) {
-        console.log('Something went wrong while logging in', error);
+        console.error('Something went wrong while logging in', error);
       }
     } else {
       setUserMessage('Enter a valid email address');

@@ -1,30 +1,44 @@
 import { useRouter } from 'next/router';
 import NavBar from '../../components/navbar/navbar';
 import Modal from 'react-modal';
+import { getVideoById } from '../../lib/videos';
 import styles from '../../styles/video.module.css';
 import clsx from 'classnames';
 
 Modal.setAppElement('#__next');
 
-const VideoPage = () => {
+export async function getStaticProps(context) {
+  const videoId = context.params.videoId;
+  const video = await getVideoById(videoId);
+  return {
+    props: {
+      video: video.length > 0 ? video[0] : {},
+    },
+
+    revalidate: 10,
+  };
+}
+
+export async function getStaticPaths() {
+  const listOfVideos = ['c2-LdSfXo14', 'GokKUqLcvD8', 'hL6R3HmQfPc'];
+  const paths = listOfVideos.map((videoId) => ({
+    params: { videoId },
+  }));
+
+  return { paths, fallback: 'blocking' };
+}
+
+const VideoPage = ({ video }) => {
   const router = useRouter();
   const { videoId } = router.query;
 
-  const video = {
-    title: 'Empire Records',
-    publishTime: '1996-01-01',
-    description:
-      'Empire Records is a 1995 American coming-of-age comedy-drama film directed by Allan Moyle, starring Anthony LaPaglia, Maxwell Caulfield, Debi Mazar, Rory Cochrane, Johnny Whitworth, Robin Tunney, Renée Zellweger, and Liv Tyler. The film follows a group of record store employees over the course of one exceptional day.',
-    channelTitle: 'Classic Previews',
-    viewCount: '435786',
-  };
-
-  const { title, publishTime, description, channelTitle, viewCount } = video;
+  const { title, publishTime, description, channelTitle, stats } = video;
+  const { viewCount, likeCount } = stats;
 
   const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://example.com&rel=0&controls=0&modestbranding=1`;
 
   return (
-    <div classname={styles.container}>
+    <div className={styles.container}>
       <NavBar />
       <Modal
         isOpen={true}
@@ -40,7 +54,7 @@ const VideoPage = () => {
           height="360"
           src={videoSrc}
           className={styles.videoPlayer}
-          frameborder="0"
+          frameBorder="0"
         ></iframe>
         <div className={styles.modalBody}>
           <div className={styles.modalBodyContent}>
@@ -55,8 +69,12 @@ const VideoPage = () => {
                 <span className={styles.channelTitle}>{channelTitle}</span>
               </p>
               <p className={clsx(styles.subText, styles.subTextWrapper)}>
-                <span className={styles.textColor}>View Count: </span>
+                <span className={styles.textColor}>Views: </span>
                 <span className={styles.channelTitle}>{viewCount}</span>
+              </p>
+              <p className={clsx(styles.subText, styles.subTextWrapper)}>
+                <span className={styles.textColor}>Likes: </span>
+                <span className={styles.channelTitle}>{likeCount}</span>
               </p>
             </div>
           </div>

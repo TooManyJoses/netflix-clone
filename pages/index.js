@@ -32,7 +32,7 @@ export default function Home({
       <div className={styles.main}>
         <NavBar />
         <Banner
-          videoId="uvIsvZlk4GE"
+          videoId="c2-LdSfXo14"
           title="Empire Records"
           subtitle="Damn the man, save the empire!"
           imgUrl="/static/empire-records.jpg"
